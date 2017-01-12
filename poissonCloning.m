@@ -4,10 +4,10 @@ function [final_out1] = poissonCloning(foreground_in,background_in,gradientMix)
 close all
 
 background = im2double(imread(background_in));
-foreground = im2double(imread(foreground_in));
+foreground_old = im2double(imread(foreground_in));
 
 %%Pad foreground
-foreground = cat(3,pad(foreground(:,:,1)),pad(foreground(:,:,2)),pad(foreground(:,:,3)));
+foreground = cat(3,pad(foreground_old(:,:,1)),pad(foreground_old(:,:,2)),pad(foreground_old(:,:,3)));
 
 % destination_point_x = 240;
 % destination_point_y = 230;
@@ -16,7 +16,8 @@ foreground = cat(3,pad(foreground(:,:,1)),pad(foreground(:,:,2)),pad(foreground(
 %%Select patch
 
 disp('Select source patch and double click');
-mask = roipoly(foreground);
+mask = roipoly(foreground_old);
+mask=padMask(mask);
 
 disp('Select destination');
 figure;
